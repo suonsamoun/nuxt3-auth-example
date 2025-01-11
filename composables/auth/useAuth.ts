@@ -1,63 +1,65 @@
-import { useAuthUser } from './useAuthUser'
+import { useAuthUser } from "./useAuthUser";
 
 export const useAuth = () => {
-  const authUser = useAuthUser()
+  const authUser = useAuthUser();
 
   const setUser = (user: any) => {
-    authUser.value = user
-  }
+    authUser.value = user;
+  };
 
   const setCookie = (cookie: any) => {
-    cookie.value = cookie
-  }
+    cookie.value = cookie;
+  };
 
   const login = async (
     email: string,
     password: string,
-    rememberMe: boolean,
+    rememberMe: boolean
   ) => {
-    const data = await $fetch('/auth/login', {
-      method: 'POST',
+    const data = await $fetch("/auth/login", {
+      method: "POST",
       body: {
         email,
         password,
         rememberMe,
       },
-    })
+    });
 
-    setUser(data.user)
+    setUser(data.user);
 
-    return authUser
-  }
+    return authUser;
+  };
 
   const logout = async () => {
-    const data = await $fetch('/auth/logout', {
-      method: 'POST',
-    })
+    const data = await $fetch("/auth/logout", {
+      method: "POST",
+    });
 
-    setUser(data.user)
-  }
+    setUser(data.user);
+  };
 
   const me = async () => {
     if (!authUser.value) {
       try {
-        const data = await $fetch('/auth/me', {
-          headers: useRequestHeaders(['cookie']) as HeadersInit,
-        })
+        const data = await $fetch("/auth/me", {
+          headers: useRequestHeaders(["cookie"]) as HeadersInit,
+        });
 
-        setUser(data.user)
-      }
-      catch (error) {
-        setCookie(null)
+        
+        console.log(data);
+
+        setUser(data.user);
+      } catch (error) {
+        setCookie(null);
       }
     }
 
-    return authUser
-  }
+    return authUser;
+  };
 
   return {
     login,
     logout,
     me,
-  }
-}
+  };
+};
