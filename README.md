@@ -54,3 +54,4 @@ npm run preview
 ```
 
 Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment) for more information.
+# nuxt3-auth-example
